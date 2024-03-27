@@ -5,8 +5,7 @@ import Redis from 'ioredis';
 // Prevents this route's response from being cached on Vercel
 export const dynamic = 'force-dynamic';
 
-console.log({ dsn: process.env.UPSTASH_REDIS_URL });
-const redisSubscriber = new Redis(process.env.UPSTASH_REDIS_URL!);
+const redisSubscriber = new Redis(process.env.REDIS_DSN!);
 
 export async function GET() {
   const encoder = new TextEncoder();
@@ -16,17 +15,17 @@ export async function GET() {
     start(controller) {
       const message = {
         type: 'init',
-        payload: { message: 'Hey, I am a message.' },
+        payload: { content: 'Hey, I am a message.' },
       };
       controller.enqueue(
         encoder.encode(`data: ${JSON.stringify(message)}\n\n`)
       );
 
-      const setKey = 'mewa-2024-03-26';
+      const channel = 'session-123';
 
       // Subscribe to Redis updates for the key: "posts"
       // In case of any error, just log it
-      redisSubscriber.subscribe(setKey, (err) => {
+      redisSubscriber.subscribe(channel, (err) => {
         if (err) console.log(err);
       });
 
@@ -35,7 +34,7 @@ export async function GET() {
         // Log the data when the channel message is received is same as the message is published to
         console.log(channel, message);
 
-        if (channel === setKey) {
+        if (channel === channel) {
           console.log(message);
           controller.enqueue(encoder.encode(`data: ${message}\n\n`));
         }

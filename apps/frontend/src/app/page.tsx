@@ -1,4 +1,4 @@
-import { Events } from './components/Events';
+import { Messages } from './components/Messages';
 
 export default function Index() {
   /*
@@ -8,7 +8,7 @@ export default function Index() {
    */
   return (
     <>
-      <Events />
+      <Messages />
     </>
   );
 }

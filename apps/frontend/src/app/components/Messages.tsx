@@ -5,12 +5,16 @@ import { useEffect, useState } from 'react';
 type Message = {
   type: string;
   payload: {
-    message: string;
+    success: boolean;
+    playerId: string;
+    nick: string;
+    code: string;
+    content?: string;
   };
 };
 
-export const Events = () => {
-  const [messages, setMessages] = useState([]);
+export const Messages = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const connectToStream = () => {
     const eventSource = new EventSource('/api/sse');
@@ -18,7 +22,7 @@ export const Events = () => {
       // console.log({ event });
       const eventMessage: Message = JSON.parse(event.data);
       console.log({ eventMessage });
-      setMessages((prevState) => [...prevState, eventMessage.type]);
+      setMessages((prevState) => [...prevState, eventMessage]);
     });
 
     // TODO: eventSource.addEventListener('error', callback)
@@ -39,7 +43,11 @@ export const Events = () => {
     <div>
       <h1>Events</h1>
       {messages.map((message, index) => (
-        <div key={index}>{message}</div>
+        <div key={index}>
+          <p>
+            {message.type}: {message.payload.content}
+          </p>
+        </div>
       ))}
     </div>
   );
