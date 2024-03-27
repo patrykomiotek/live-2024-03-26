@@ -1,4 +1,12 @@
-# Live20240326
+# Live 2024-03-26
+
+Create an account on [Upstash.com](https://upstash.com) and populate below env variables in `apps/frontend/.env.local`:
+
+```
+UPSTASH_REDIS_URL=
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
